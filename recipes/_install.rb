@@ -52,7 +52,7 @@ end
 # Because python_pip doesn't support adding arguments yet we have to do this 
 # the hard way
 # See: https://github.com/poise/python/issues/98
-pip_cmd = "#{node['sentryr'['install_dir']}/bin/pip"
+pip_cmd = "#{node['sentry']['install_dir']}/bin/pip"
 pkg_name = node['sentry']['pipname']
 pkg_ver = node['sentry']['version']
 
