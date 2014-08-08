@@ -117,21 +117,37 @@ execute "sentry DB upgrade" do
   action :run
 end
 
-initial_admin_json = "#{node["sentry"]["config_dir"]}/initial_admin.json"
-template initial_admin_json do
-  source "initial_admin.json.erb"
-  owner sentry_user
+# Can't load data because of https://code.djangoproject.com/ticket/19472 :(
+# We have to create the superuser like this
+username = sentry_config['admin_username']
+email = sentry_config['admin_email']
+passwd = sentry_config['admin_password']
+
+execute 'create superuser' do
+  command "echo 'from django.contrib.auth import get_user_model; " \
+    "get_user_model().objects.create_superuser(\"#{username}\", \"#{email}\","\
+    " \"#{passwd}\")' | #{node["sentry"]["install_dir"]}/bin/sentry "\
+    "--config=#{node["sentry"]["config_file_path"]} shell"
+  user sentry_user
   group sentry_group
-  mode  "0600"
-  variables({
-    username: sentry_config["admin_username"],
-    password: sentry_config["admin_password"],
-    email: sentry_config["admin_email"]
-  })
+  action :run
 end
 
-execute "create initial admin" do
-  command "#{node["sentry"]["install_dir"]}/bin/sentry --config=#{node["sentry"]["config_file_path"]} loaddata #{initial_admin_json}"
-  action :nothing
-  subscribes :run, "template[#{initial_admin_json}]", :immediately
-end
+#initial_admin_json = "#{node["sentry"]["config_dir"]}/initial_admin.json"
+#template initial_admin_json do
+#  source "initial_admin.json.erb"
+#  owner sentry_user
+#  group sentry_group
+#  mode  "0600"
+#  variables({
+#    username: sentry_config["admin_username"],
+#    password: sentry_config["admin_password"],
+#    email: sentry_config["admin_email"]
+#  })
+#end
+
+#execute "create initial admin" do
+# command "#{node["sentry"]["install_dir"]}/bin/sentry --config=#{node["sentry"]["config_file_path"]} loaddata #{initial_admin_json}"
+#  action :nothing
+#  subscribes :run, "template[#{initial_admin_json}]", :immediately
+#end
