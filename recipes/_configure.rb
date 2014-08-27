@@ -93,6 +93,7 @@ template node["sentry"]["config_file_path"] do
     public: node["sentry"]["config"]["public"],
     allow_registration: node["sentry"]["config"]["allow_registration"],
     url_prefix: node["sentry"]["config"]["url_prefix"].sub(/(\/)+\z/, ""),
+    force_script_name: node["sentry"]["config"]["force_script_name"].sub(/(\/)+\z/, ""),
     web_host: node["sentry"]["config"]["web_host"],
     web_port: node["sentry"]["config"]["web_port"],
     web_options: node["sentry"]["config"]["web_options"],

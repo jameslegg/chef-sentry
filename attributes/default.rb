@@ -53,6 +53,8 @@ default["sentry"]["config"]["web_options"] = {
   }
 }
 default["sentry"]["config"]["url_prefix"] = "http://localhost:#{node["sentry"]["config"]["web_port"]}"
+# If you want to run sentry in a subdirectory behind a web proxy set here:
+default["sentry"]["config"]["force_script_name"] = ""
 default["sentry"]["config"]["email_default_from"] = "#{node["sentry"]["user"]}@#{node[:fqdn]}"
 default["sentry"]["config"]["email_backend"] = "django.core.mail.backends.smtp.EmailBackend"
 default["sentry"]["config"]["email_host"] = "localhost"
