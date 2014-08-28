@@ -56,16 +56,15 @@ pip_cmd = "#{node['sentry']['install_dir']}/bin/pip"
 pkg_name = node['sentry']['pipname']
 pkg_ver = node['sentry']['version']
 
-execute 'pip install sentry' do
-  command "#{pip_cmd} install --allow-external #{pkg_name} --allow-unverified #{pkg_name} #{pkg_name}==#{pkg_ver}"
+python_pip node["sentry"]["pipname"] do
+  virtualenv node["sentry"]["install_dir"]
+  version node["sentry"]["version"]
+  user sentry_user
+  group sentry_group
+  if node['sentry']['version'] == 'dev'
+    options "--allow-external #{pkg_name} --allow-unverified #{pkg_name}"
+  end
 end
-
-#python_pip node["sentry"]["pipname"] do
-#  virtualenv node["sentry"]["install_dir"]
-#  version node["sentry"]["version"]
-#  user sentry_user
-#  group sentry_group
-#end
 
 # Install database pip dependency
 node["sentry"]["database"]["pipdeps"].each do |dep|

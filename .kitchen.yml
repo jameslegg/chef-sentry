@@ -7,6 +7,9 @@ platforms:
     box: opscode-ubuntu-12.04
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
     require_chef_omnibus: "11.4.4"
+    customize:
+      # compiling libxml dies without a chuck'a'ram
+      memory: 1024
 
 suites:
 - name: default
