@@ -46,7 +46,7 @@ SENTRY_ALLOW_REGISTRATION = <%= @allow_registration ? 'True' : 'False' %>
 SENTRY_KEY = '<%= @signing_token %>'
 
 SENTRY_URL_PREFIX = '<%= @url_prefix %>'  # No trailing slash!
-<%= "FORCE_SCRIPT_NAME = #{@force_script_name}" if @force_script_name %>
+<%= "FORCE_SCRIPT_NAME = '#{@force_script_name}'" if @force_script_name %>
 
 SENTRY_WEB_HOST = '<%= @web_host %>'
 SENTRY_WEB_PORT = <%= @web_port %>
