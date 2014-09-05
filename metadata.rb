@@ -10,3 +10,4 @@ supports "ubuntu"
 
 depends "python"
 depends "runit", ">= 1.1.6"
+depends "mysql", "~> 5.3.0"

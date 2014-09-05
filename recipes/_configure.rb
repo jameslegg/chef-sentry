@@ -76,6 +76,10 @@ directory node["sentry"]["config_dir"] do
   action :create
 end
 
+if node["sentry"]["config"]["force_script_name"]
+  fr_script = node["sentry"]["config"]["force_script_name"].sub(/(\/)+\z/, "")
+end
+
 template node["sentry"]["config_file_path"] do
   source "sentry.conf.py.erb"
   owner sentry_user
@@ -93,6 +97,7 @@ template node["sentry"]["config_file_path"] do
     public: node["sentry"]["config"]["public"],
     allow_registration: node["sentry"]["config"]["allow_registration"],
     url_prefix: node["sentry"]["config"]["url_prefix"].sub(/(\/)+\z/, ""),
+    force_script_name: "#{fr_script}",
     web_host: node["sentry"]["config"]["web_host"],
     web_port: node["sentry"]["config"]["web_port"],
     web_options: node["sentry"]["config"]["web_options"],
