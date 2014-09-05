@@ -20,3 +20,4 @@
 include_recipe "sentry::_install"
 include_recipe "sentry::_configure"
 include_recipe "sentry::_service"
+include_recipe "sentry::_workers"

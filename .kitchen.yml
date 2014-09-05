@@ -1,6 +1,9 @@
 ---
 driver_plugin: vagrant
 
+provisioner:
+  name: chef_zero
+
 platforms:
 - name: ubuntu-12.04
   driver_config:
@@ -11,13 +14,11 @@ platforms:
 suites:
 - name: default
   run_list:
-  - "recipe[chef-solo-search]"
   - "recipe[sentry_test::default]"
   - "recipe[minitest-handler]"
 
 - name: encrypted_databag
   run_list:
-  - "recipe[chef-solo-search]"
   - "recipe[sentry_test::encrypted_data_bag]"
   - "recipe[minitest-handler]"
   attributes:

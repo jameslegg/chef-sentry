@@ -63,6 +63,9 @@ default["sentry"]["config"]["additional_apps"] = ["djangosecure", "django_bcrypt
 default["sentry"]["config"]["prepend_middleware_classes"] = ["djangosecure.middleware.SecurityMiddleware"]
 default["sentry"]["config"]["append_middleware_classes"] = []
 
+# Number of celery workers to start
+default["sentry"]["config"]["celery_workers"] = 1
+
 default["sentry"]["data_bag"] = "sentry"
 default["sentry"]["data_bag_item"] = "credentials"
 default["sentry"]["use_encrypted_data_bag"] = false
